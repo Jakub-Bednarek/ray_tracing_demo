@@ -1,13 +1,13 @@
 ---
 Language:        Cpp
 BasedOnStyle: Google
-AccessModifierOffset: -2
+AccessModifierOffset: -4
 AlignEscapedNewlinesLeft: true
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: true
 BinPackParameters: true
-BreakBeforeBraces: Allmant
+BreakBeforeBraces: Allman
 ColumnLimit: 100
 IndentWidth: 4
 TabWidth: 4
