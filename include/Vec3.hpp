@@ -154,6 +154,12 @@ private:
 }  // namespace Utils
 
 template <typename T>
+using Vec3 = Utils::Vec3<T>;
+using Vec3d = Utils::Vec3<double>;
+using Point3 = Utils::Vec3<double>;
+using Color3 = Utils::Vec3<double>;
+
+template <typename T>
 inline std::ostream& operator<<(std::ostream& out, const Vec3<T>& vec)
 {
 	return out << vec.x() << ' ' << vec.y() << ' ' << vec.z();
@@ -182,11 +188,5 @@ inline Vec3<T> operator/(const double value, const Vec3<T>& vec)
 {
 	return vec * value;
 }
-
-template <typename T>
-using Vec3 = Utils::Vec3<T>;
-using Vec3d = Utils::Vec3<double>;
-using Point3 = Utils::Vec3<double>;
-using Color3 = Utils::Vec3<double>;
 
 #endif	// VEC3_HPP

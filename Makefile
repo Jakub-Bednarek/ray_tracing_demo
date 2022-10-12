@@ -1,6 +1,8 @@
+SHELL := /bin/bash
 EXECUTABLE_NAME="ray_tracing_demo"
-BUILD_DIR="./build"
+export BUILD_DIR="./build"
 
+ROOT_DIR 	 := $(shell pwd)
 COLOR_CLEAR  := $(shell tput -Txterm sgr0)
 COLOR_RED    := $(shell tput -Txterm setaf 1)
 COLOR_GREEN  := $(shell tput -Txterm setaf 2)
@@ -12,17 +14,25 @@ clean:
 	@echo "Cleaning ${BUILD_DIR}"
 	@rm -rf ${BUILD_DIR}
 
-config:
+config: clean
 	@echo "Configuration"
 	@mkdir ${BUILD_DIR} && cd ${BUILD_DIR} && cmake ..
+
+cpp_config: clean
+	@echo "Configuration for cpptests"
+	@mkdir ${BUILD_DIR} && cd ${BUILD_DIR} && cmake .. -DENABLE_TESTING=True
 
 build: config
 	@echo "Starting build"
 	@cd ${BUILD_DIR} && make
 
 run: config build
-	@echo "\n${COLOR_GREEN}--------   Running ray_tracing_demo --------${COLOR_CLEAR}\n"
+	@echo "${COLOR_GREEN}--------   Running ray_tracing_demo --------${COLOR_CLEAR}"
 	@./${BUILD_DIR}/${EXECUTABLE_NAME}
+
+cpp_test: cpp_config
+	@cd ${BUILD_DIR} && make
+	./run_cpp_test.sh
 
 clang_format:
 	@find -iname *.h -o -iname *.cpp | xargs clang-format -i
