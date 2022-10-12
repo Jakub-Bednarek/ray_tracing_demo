@@ -14,11 +14,5 @@ int main()
 	EasyFileWriter::generateToFile("testGradient.ppm", RenderAlgorithms::generateGradient, 480,
 								   320);
 
-	Utils::Vec3 a { 1, 2, 3 };
-	Utils::Vec3 b { 5, 3, 87 };
-
-	std::cout << a << '\n' << b << '\n';
-	auto c = a + b;
-
 	return 0;
 }
