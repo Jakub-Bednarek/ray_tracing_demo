@@ -23,3 +23,9 @@ build: config
 run: config build
 	@echo "\n${COLOR_GREEN}--------   Running ray_tracing_demo --------${COLOR_CLEAR}\n"
 	@./${BUILD_DIR}/${EXECUTABLE_NAME}
+
+clang_format:
+	@find -iname *.h -o -iname *.cpp | xargs clang-format -i
+
+valgrind: clean config build
+	@valgrind --leak-check=yes ${BUILD_DIR}/${EXECUTABLE_NAME}
