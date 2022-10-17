@@ -3,7 +3,6 @@ project(ray_tracing_demo)
 
 macro(add_demo_executable executable headers sources)
     if(NOT ENABLE_TESTING)
-        message("EXECUTABLE: ${executable} HEADERS: ${headers} SOURCES: ${sources}")
         add_executable(${executable} ${headers} ${sources})
     endif()
 endmacro()

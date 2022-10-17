@@ -35,9 +35,9 @@ public:
 		}
 	}
 
-	const_reference x() const { return v.at(0); }
-	const_reference y() const { return v.at(1); }
-	const_reference z() const { return v.at(2); }
+	inline const_reference x() const { return v.at(0); }
+	inline const_reference y() const { return v.at(1); }
+	inline const_reference z() const { return v.at(2); }
 
 	Vec3 unitVector() const noexcept
 	{
@@ -151,13 +151,11 @@ private:
 	std::array<T, 3> v;
 };
 
-}  // namespace Utils
-
 template <typename T>
-using Vec3 = Utils::Vec3<T>;
-using Vec3d = Utils::Vec3<double>;
-using Point3 = Utils::Vec3<double>;
-using Color3 = Utils::Vec3<double>;
+inline bool operator==(const Vec3<T>& lhs, const Vec3<T>& rhs)
+{
+	return lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z();
+}
 
 template <typename T>
 inline std::ostream& operator<<(std::ostream& out, const Vec3<T>& vec)
@@ -168,7 +166,7 @@ inline std::ostream& operator<<(std::ostream& out, const Vec3<T>& vec)
 template <typename T>
 inline Vec3<T> operator*(const Vec3<T>& vec, const double value)
 {
-	return {vec.v.at(0) * value, vec.v.at(1) * value, vec.v.at(2) * value};
+	return { vec.v.at(0) * value, vec.v.at(1) * value, vec.v.at(2) * value };
 }
 
 template <typename T>
@@ -180,7 +178,7 @@ inline Vec3<T> operator*(const double value, const Vec3<T>& vec)
 template <typename T>
 inline Vec3<T> operator/(const Vec3<T>& vec, const double value)
 {
-	return {vec.v.at(0) / value, vec.v.at(1) / value, vec.v.at(2) / value};
+	return { vec.v.at(0) / value, vec.v.at(1) / value, vec.v.at(2) / value };
 }
 
 template <typename T>
@@ -188,5 +186,13 @@ inline Vec3<T> operator/(const double value, const Vec3<T>& vec)
 {
 	return vec * value;
 }
+
+}  // namespace Utils
+
+template <typename T>
+using Vec3 = Utils::Vec3<T>;
+using Vec3d = Utils::Vec3<double>;
+using Point3 = Utils::Vec3<double>;
+using Color3 = Utils::Vec3<double>;
 
 #endif	// VEC3_HPP

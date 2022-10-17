@@ -8,19 +8,21 @@ COLOR_RED    := $(shell tput -Txterm setaf 1)
 COLOR_GREEN  := $(shell tput -Txterm setaf 2)
 COLOR_YELLOW := $(shell tput -Txterm setaf 3)
 
-all: clean config build run
+all: config build run
 
 clean:
 	@echo "Cleaning ${BUILD_DIR}"
 	@rm -rf ${BUILD_DIR}
 
-config: clean
+config:
 	@echo "Configuration"
-	@mkdir ${BUILD_DIR} && cd ${BUILD_DIR} && cmake ..
+	@$(shell [ ! -d "${BUILD_DIR}" ] && mkdir ${BUILD_DIR})
+	@cd ${BUILD_DIR} && cmake ..
 
-cpp_config: clean
+cpp_config:
 	@echo "Configuration for cpptests"
-	@mkdir ${BUILD_DIR} && cd ${BUILD_DIR} && cmake .. -DENABLE_TESTING=True
+	@$(shell [ ! -d "${BUILD_DIR}" ] && mkdir ${BUILD_DIR})
+	@cd ${BUILD_DIR} && cmake .. -DENABLE_TESTING=True
 
 build: config
 	@echo "Starting build"
