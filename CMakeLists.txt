@@ -49,6 +49,7 @@ set(HEADERS
 set(SRC ${CMAKE_SOURCE_DIR}/src)
 set(SOURCES
     ${CMAKE_SOURCE_DIR}/main.cpp
+    ${SRC}/Camera.cpp
     ${SRC}/Ray.cpp)
 
 add_demo_executable(${PROJECT_NAME} "${HEADERS}" "${SOURCES}")

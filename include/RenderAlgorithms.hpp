@@ -1,6 +1,10 @@
 #ifndef RENDER_ALGORITHMS_HPP
 #define RENDER_ALGORITHMS_HPP
 
+#include "Ray.hpp"
+#include "Vec3.hpp"
+#include "Camera.hpp"
+
 #include <cmath>
 #include <iomanip>
 #include <iostream>
@@ -11,18 +15,26 @@ namespace RenderAlgorithms
 
 constexpr auto BLUE_GRADIENT_VAL = static_cast<int>(0.25 * 255.99);
 
+void writeColor(std::stringstream& ss, const Color3d& color)
+{
+	ss << static_cast<std::uint64_t>(color.x() * 255.99) << ' '
+	   << static_cast<std::uint64_t>(color.y() * 255.99) << ' '
+	   << static_cast<std::uint64_t>(color.z() * 255.99) << '\n';
+}
+
 std::string generateCrazyShapes(const std::uint32_t width, const std::uint32_t height)
 {
 	std::stringstream ss{};
-	for (int i = 0; i < height; i++)
+	Camera camera(2.0, 1.0, Point3d(0.0, 0.0, 0.0));
+	for (int i = height - 1; i >= 0; i--)
 	{
+		const auto v = static_cast<double>(i) / static_cast<double>(height - 1);
 		for (int j = 0; j < width; j++)
 		{
-			auto r = static_cast<int>(std::abs(double(j) / double(width)) * 255.99);
-			auto g = static_cast<int>(std::abs(std::sin(i * j)) * 255.99);
-			auto b = static_cast<int>(std::abs(std::cos(i + j)) * 255.99);
+			const auto u = static_cast<double>(j) / static_cast<double>(width - 1);
+			Utils::Ray ray(camera.getOrigin(), camera.getLowerLeftCorner() + (u * camera.getHorizontal()) + (v * camera.getVertical()) - camera.getOrigin());
 
-			ss << r << ' ' << g << ' ' << b << '\n';
+			writeColor(ss, Utils::rayColor(ray));
 		}
 
 		if (i % 10 == 0)
@@ -42,10 +54,10 @@ std::string generateGradient(const std::uint32_t width, const std::uint32_t heig
 	{
 		for (int j = width - 1; j >= 0; j--)
 		{
-			auto r = static_cast<int>(double(j) / double(width - 1) * 255.99);
-			auto g = static_cast<int>(double(i) / double(height - 1) * 255.99);
+			auto rgb = Color3d{double(j) / double(width - 1) * 255.99,
+							   double(i) / double(height - 1) * 255.99, BLUE_GRADIENT_VAL};
 
-			ss << r << ' ' << g << ' ' << BLUE_GRADIENT_VAL << '\n';
+			ss << Utils::getIntegralVector(rgb) << '\n';
 		}
 
 		if (i % 10 == 0)
