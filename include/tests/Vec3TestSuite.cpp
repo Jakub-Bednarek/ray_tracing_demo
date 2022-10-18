@@ -6,6 +6,7 @@
 namespace {
 const Vec3d dummyVec { 1.0, 1.0, 2.0 };
 const Vec3d crossResultVec { -1.0, 1.0, 0.0 };
+const Vec3d integerVec { 1.5, 1.5, 1.5 };
 constexpr auto EXPECTED_DOT_VALUE = 9;
 constexpr auto EXPECTED_VALUE = 1.0;
 constexpr auto INVALID_INDEX = 4;
@@ -37,4 +38,9 @@ TEST(Vec3dTestSuite, VectorShouldReturnCrossProduct)
 TEST(Vec3dTestSuite, VectorShouldReturnLengthSquared)
 {
     ASSERT_EQ(dummyVec.length_squared(), EXPECTED_LENGTH_SQUARED);
+}
+
+TEST(Vec3dConversionTestSuite, IntegerVectorShouldReturnCopyOfSelf)
+{
+    auto integerVecCopy = Utils::getIntegralVector(integerVec);
 }

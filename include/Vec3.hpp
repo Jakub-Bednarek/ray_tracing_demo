@@ -4,6 +4,7 @@
 #include <array>
 #include <cmath>
 #include <iostream>
+#include <type_traits>
 
 namespace Utils
 {
@@ -17,11 +18,24 @@ public:
 
 	using const_reference = T const&;
 	using reference = T&;
+	using value_type = T;
 
 	Vec3(const Vec3&) = default;
 	Vec3(Vec3&&) = default;
 	Vec3& operator=(Vec3&) = default;
 	Vec3& operator=(Vec3&&) = default;
+
+	reference at(const int index)
+	{
+		if (index >= 0 && index <= 3)
+		{
+			return v.at(index);
+		}
+		else
+		{
+			throw std::out_of_range("Invalid index for array size 3");
+		}
+	}
 
 	const_reference at(const int index) const
 	{
@@ -39,10 +53,7 @@ public:
 	inline const_reference y() const { return v.at(1); }
 	inline const_reference z() const { return v.at(2); }
 
-	Vec3 unitVector() const noexcept
-	{
-		return this / v.length();
-	}
+	Vec3 unitVector() const noexcept { return *this / length(); }
 
 	double length() const noexcept { return std::sqrt(length_squared()); }
 
@@ -132,24 +143,16 @@ public:
 		return {v.at(0) + rhs.v.at(0), v.at(1) + rhs.v.at(1), v.at(2) + rhs.v.at(2)};
 	}
 
-	Vec3 operator-(const Vec3& rhs)
-	{
-		return {v.at(0) - rhs.v.at(0), v.at(1) - rhs.v.at(1), v.at(2) - rhs.v.at(2)};
-	}
-
-	Vec3 operator*(const Vec3& rhs)
-	{
-		return {v.at(0) * rhs.v.at(0), v.at(1) * rhs.v.at(1), v.at(2) * rhs.v.at(2)};
-	}
-
-	Vec3 operator/(const Vec3& rhs)
-	{
-		return {v.at(0) / rhs.v.at(0), v.at(1) / rhs.v.at(1), v.at(2) / rhs.v.at(2)};
-	}
-
 private:
 	std::array<T, 3> v;
 };
+
+template <typename T,
+		  typename std::enable_if_t<!std::is_integral<typename T::value_type>::value>* = nullptr>
+Vec3<int> getIntegralVector(const T& vec)
+{
+	return {static_cast<int>(vec.x()), static_cast<int>(vec.y()), static_cast<int>(vec.z())};
+}
 
 template <typename T>
 inline bool operator==(const Vec3<T>& lhs, const Vec3<T>& rhs)
@@ -166,7 +169,7 @@ inline std::ostream& operator<<(std::ostream& out, const Vec3<T>& vec)
 template <typename T>
 inline Vec3<T> operator*(const Vec3<T>& vec, const double value)
 {
-	return { vec.v.at(0) * value, vec.v.at(1) * value, vec.v.at(2) * value };
+	return {vec.x() * value, vec.y() * value, vec.z() * value};
 }
 
 template <typename T>
@@ -178,7 +181,7 @@ inline Vec3<T> operator*(const double value, const Vec3<T>& vec)
 template <typename T>
 inline Vec3<T> operator/(const Vec3<T>& vec, const double value)
 {
-	return { vec.v.at(0) / value, vec.v.at(1) / value, vec.v.at(2) / value };
+	return {vec.x() / value, vec.y() / value, vec.z() / value};
 }
 
 template <typename T>
@@ -187,12 +190,36 @@ inline Vec3<T> operator/(const double value, const Vec3<T>& vec)
 	return vec * value;
 }
 
+template <typename T>
+inline Vec3<T> operator+(const Vec3<T>& lhs, const Vec3<T>& rhs)
+{
+	return {lhs.x() + rhs.x(), lhs.y() + rhs.y(), lhs.z() + rhs.z()};
+}
+
+template <typename T>
+Vec3<T> operator-(const Vec3<T>& lhs, const Vec3<T>& rhs)
+{
+	return {lhs.x() - rhs.x(), lhs.y() - rhs.y(), lhs.z() - rhs.z()};
+}
+
+template <typename T>
+Vec3<T> operator*(const Vec3<T>& lhs, const Vec3<T>& rhs)
+{
+	return {lhs.x() * rhs.x(), lhs.y() * rhs.y(), lhs.z() * rhs.z()};
+}
+
+template <typename T>
+Vec3<T> operator/(const Vec3<T>& lhs, const Vec3<T>& rhs)
+{
+	return {lhs.x() / rhs.x(), lhs.y() / rhs.y(), lhs.z() / rhs.z()};
+}
+
 }  // namespace Utils
 
 template <typename T>
 using Vec3 = Utils::Vec3<T>;
 using Vec3d = Utils::Vec3<double>;
-using Point3 = Utils::Vec3<double>;
-using Color3 = Utils::Vec3<double>;
+using Point3d = Utils::Vec3<double>;
+using Color3d = Utils::Vec3<double>;
 
 #endif	// VEC3_HPP
