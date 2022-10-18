@@ -9,10 +9,10 @@
 
 int main()
 {
-	EasyFileWriter::generateToFile("testShapes.ppm", RenderAlgorithms::generateCrazyShapes, 480,
-								   320);
-	EasyFileWriter::generateToFile("testGradient.ppm", RenderAlgorithms::generateGradient, 480,
-								   320);
+	EasyFileWriter::generateToFile("testShapes.ppm", RenderAlgorithms::generateCrazyShapes, 1280,
+								   720);
+	// EasyFileWriter::generateToFile("testGradient.ppm", RenderAlgorithms::generateGradient, 400,
+	// 							   225);
 
 	return 0;
 }
