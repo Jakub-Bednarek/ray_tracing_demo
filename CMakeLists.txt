@@ -48,8 +48,11 @@ set(HEADERS
 
 set(SRC ${CMAKE_SOURCE_DIR}/src)
 set(SOURCES
-    ${CMAKE_SOURCE_DIR}/main.cpp)
+    ${CMAKE_SOURCE_DIR}/main.cpp
+    ${SRC}/Ray.cpp)
 
 add_demo_executable(${PROJECT_NAME} "${HEADERS}" "${SOURCES}")
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE})
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/include)
