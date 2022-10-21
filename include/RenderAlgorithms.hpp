@@ -28,23 +28,21 @@ void writeColor(std::stringstream& ss, const Color3d& color)
 std::string generateRayGradient(const std::uint32_t width, const std::uint32_t height, RayColorFunc rayColorFunc)
 {
 	std::stringstream ss{};
-	Camera camera(2.0, 1.0, Point3d(0.0, 0.0, 0.0));
+	Camera camera(4.0, 1.0, Point3d(0.0, 0.0, 0.0));
 	for (int i = height - 1; i >= 0; i--)
 	{
-		const auto v = static_cast<double>(i) / static_cast<double>(height - 1);
 		for (int j = 0; j < width; j++)
 		{
 			const auto u = static_cast<double>(j) / static_cast<double>(width - 1);
+			const auto v = static_cast<double>(i) / static_cast<double>(height - 1);
+			
 			Utils::Ray ray(camera.getOrigin(), camera.getLowerLeftCorner() + (u * camera.getHorizontal()) + (v * camera.getVertical()) - camera.getOrigin());
+			
 
 			writeColor(ss, rayColorFunc(ray));
 		}
-
-		if (i % 10 == 0)
-		{
-			std::cout << "Progress: " << std::setprecision(2) << (double(i) / height) * 100.0
-					  << "%\n";
-		}
+		
+		std::cout << height - i << " / " << height << '\n';
 	}
 
 	return ss.str();

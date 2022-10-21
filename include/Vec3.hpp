@@ -64,12 +64,12 @@ public:
 
 	double dot(const Vec3& rhs) const noexcept
 	{
-		return {v.at(0) * rhs.v.at(0) + v.at(1) + rhs.v.at(1) + v.at(2) + rhs.v.at(2)};
+		return {v.at(0) * rhs.v.at(0) + v.at(1) * rhs.v.at(1) + v.at(2) + rhs.v.at(2)};
 	}
 
 	static double dot(const Vec3& lhs, const Vec3& rhs)
 	{
-		return {lhs.at(0) * rhs.v.at(0) + lhs.at(1) + rhs.v.at(1) + lhs.at(2) + rhs.v.at(2)};
+		return {lhs.at(0) * rhs.v.at(0) + lhs.at(1) * rhs.v.at(1) + lhs.at(2) + rhs.v.at(2)};
 	}
 
 	Vec3 cross(const Vec3& rhs) const noexcept

@@ -1,7 +1,7 @@
 #include "Camera.hpp"
 
 Camera::Camera()
-	: viewportHeight(3.0),
+	: viewportHeight(4.0),
 	  viewportWidth(Config::ASPECT_RATIO * viewportHeight),
 	  focalLength(1.0),
 	  origin(0.0, 0.0, 0.0),
@@ -18,6 +18,7 @@ Camera::Camera(const double viewportHeight, const double focalLength, const Poin
 	  horizontal(viewportWidth, 0.0, 0.0),
 	  vertical(0.0, viewportHeight, 0.0)
 {
+	std::cout << "Viewport height: " << viewportHeight << " | viewport width: " << viewportWidth << " | origin: " << origin << '\n'; 
 }
 
 Vec3d Camera::getLowerLeftCorner() const

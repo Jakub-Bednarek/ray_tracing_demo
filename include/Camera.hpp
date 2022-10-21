@@ -6,7 +6,7 @@
 
 namespace Config
 {
-constexpr auto ASPECT_RATIO = 3.0 / 2.0;
+constexpr auto ASPECT_RATIO = 1.0;
 }  // namespace Config
 
 class Camera
