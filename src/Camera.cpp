@@ -1,7 +1,7 @@
 #include "Camera.hpp"
 
 Camera::Camera()
-	: viewportHeight(2.0),
+	: viewportHeight(3.0),
 	  viewportWidth(Config::ASPECT_RATIO * viewportHeight),
 	  focalLength(1.0),
 	  origin(0.0, 0.0, 0.0),

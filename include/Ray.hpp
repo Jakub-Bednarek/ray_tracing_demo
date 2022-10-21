@@ -21,7 +21,12 @@ private:
 	Vec3d direction;
 };
 
-Color3d rayColor(const Ray& ray);
+namespace RayColorFunctions
+{
+Color3d gradientYParam(const Ray& ray);
+Color3d gradientXYParam(const Ray& ray);
+Color3d gradientXYParamWithSphere(const Ray& ray);
+}
 
 std::ostream& operator<<(std::ostream& out, const Ray& ray);
 

@@ -9,11 +9,14 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <functional>
 
 namespace RenderAlgorithms
 {
 
 constexpr auto BLUE_GRADIENT_VAL = static_cast<int>(0.25 * 255.99);
+
+using RayColorFunc = std::function<Color3d(const Utils::Ray&)>;
 
 void writeColor(std::stringstream& ss, const Color3d& color)
 {
@@ -22,7 +25,7 @@ void writeColor(std::stringstream& ss, const Color3d& color)
 	   << static_cast<std::uint64_t>(color.z() * 255.99) << '\n';
 }
 
-std::string generateCrazyShapes(const std::uint32_t width, const std::uint32_t height)
+std::string generateRayGradient(const std::uint32_t width, const std::uint32_t height, RayColorFunc rayColorFunc)
 {
 	std::stringstream ss{};
 	Camera camera(2.0, 1.0, Point3d(0.0, 0.0, 0.0));
@@ -34,7 +37,7 @@ std::string generateCrazyShapes(const std::uint32_t width, const std::uint32_t h
 			const auto u = static_cast<double>(j) / static_cast<double>(width - 1);
 			Utils::Ray ray(camera.getOrigin(), camera.getLowerLeftCorner() + (u * camera.getHorizontal()) + (v * camera.getVertical()) - camera.getOrigin());
 
-			writeColor(ss, Utils::rayColor(ray));
+			writeColor(ss, rayColorFunc(ray));
 		}
 
 		if (i % 10 == 0)
@@ -45,6 +48,21 @@ std::string generateCrazyShapes(const std::uint32_t width, const std::uint32_t h
 	}
 
 	return ss.str();
+}
+
+std::string generateRayGradientY(const std::uint32_t width, const std::uint32_t height)
+{
+	return generateRayGradient(width, height, Utils::RayColorFunctions::gradientYParam);
+}
+
+std::string generateRayGradientXY(const std::uint32_t width, const std::uint32_t height)
+{
+	return generateRayGradient(width, height, Utils::RayColorFunctions::gradientXYParam);
+}
+
+std::string generateRayGradientXYWithSphere(const std::uint32_t width, const std::uint32_t height)
+{
+	return generateRayGradient(width, height, Utils::RayColorFunctions::gradientXYParamWithSphere);
 }
 
 std::string generateGradient(const std::uint32_t width, const std::uint32_t height)
