@@ -4,11 +4,6 @@
 #include "geometry/Ray.hpp"
 #include "geometry/Vec3.hpp"
 
-namespace Config
-{
-constexpr auto ASPECT_RATIO = 1.0;
-}  // namespace Config
-
 class Camera
 {
 public:

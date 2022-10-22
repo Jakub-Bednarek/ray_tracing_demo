@@ -1,8 +1,10 @@
 #include "Camera.hpp"
 
+#include "GlobalConfig.hpp"
+
 Camera::Camera()
 	: viewportHeight(4.0),
-	  viewportWidth(Config::ASPECT_RATIO * viewportHeight),
+	  viewportWidth(Config::aspectRatio * viewportHeight),
 	  focalLength(1.0),
 	  origin(0.0, 0.0, 0.0),
 	  horizontal(viewportWidth, 0.0, 0.0),
@@ -12,7 +14,7 @@ Camera::Camera()
 
 Camera::Camera(const double viewportHeight, const double focalLength, const Point3d& origin)
 	: viewportHeight(viewportHeight),
-	  viewportWidth(Config::ASPECT_RATIO * viewportHeight),
+	  viewportWidth(Config::aspectRatio * viewportHeight),
 	  focalLength(focalLength),
 	  origin(origin),
 	  horizontal(viewportWidth, 0.0, 0.0),
