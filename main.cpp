@@ -3,20 +3,20 @@
 #include <iostream>
 #include <sstream>
 
-#include "include/EasyFileWriter.hpp"
-#include "include/RenderAlgorithms.hpp"
-#include "include/Vec3.hpp"
+#include "EasyFileWriter.hpp"
+#include "RenderAlgorithms.hpp"
+#include "geometry/Vec3.hpp"
 
 void runAll()
 {
-	EasyFileWriter::generateToFile("rayGradientY.ppm", RenderAlgorithms::generateRayGradientY, 1280,
-								   1280);
-	EasyFileWriter::generateToFile("rayGradientXY.ppm", RenderAlgorithms::generateRayGradientXY, 1280,
-								   1280);
-	EasyFileWriter::generateToFile("rayGradientXYSphere.ppm", RenderAlgorithms::generateRayGradientXYWithSphere, 1280,
-								   1280);
-	EasyFileWriter::generateToFile("rayGradientInSphere.ppm", RenderAlgorithms::generateRayGradientInSphere, 1280,
-								   1280);
+	EasyFileWriter::generateToFile("rayGradientY.ppm", RenderAlgorithms::generateRayGradientY, 400,
+								   400);
+	EasyFileWriter::generateToFile("rayGradientXY.ppm", RenderAlgorithms::generateRayGradientXY, 400,
+								   400);
+	EasyFileWriter::generateToFile("rayGradientXYSphere.ppm", RenderAlgorithms::generateRayGradientXYWithSphere, 400,
+								   400);
+	EasyFileWriter::generateToFile("rayGradientInSphere.ppm", RenderAlgorithms::generateRayGradientInSphere, 400,
+								   400);
 }
 
 void runSingle()

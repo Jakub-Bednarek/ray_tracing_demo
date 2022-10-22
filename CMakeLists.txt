@@ -44,13 +44,15 @@ set(INCLUDE ${CMAKE_SOURCE_DIR}/include)
 set(HEADERS 
     ${INCLUDE}/EasyFileWriter.hpp
     ${INCLUDE}/RenderAlgorithms.hpp
-    ${INCLUDE}/Vec3.hpp)
+    ${INCLUDE}/geometry/Ray.hpp
+    ${INCLUDE}/geometry/Sphere.hpp
+    ${INCLUDE}/geometry/Vec3.hpp)
 
 set(SRC ${CMAKE_SOURCE_DIR}/src)
 set(SOURCES
     ${CMAKE_SOURCE_DIR}/main.cpp
-    ${SRC}/Camera.cpp
-    ${SRC}/Ray.cpp)
+    ${SRC}/geometry/Camera.cpp
+    ${SRC}/geometry/Ray.cpp)
 
 add_demo_executable(${PROJECT_NAME} "${HEADERS}" "${SOURCES}")
 

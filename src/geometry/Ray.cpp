@@ -1,28 +1,10 @@
-#include "Ray.hpp"
+#include "geometry/Ray.hpp"
+#include "geometry/Sphere.hpp"
 
 #include <cmath>
 
 namespace Utils
 {
-
-double hitSphere(const Point3d& center, const double radius, const Ray& ray)
-{
-    Vec3d originCenter = ray.getOrigin() - center;
-
-    auto a = ray.getDirection().dot(ray.getDirection());
-    auto b = 2.0 * originCenter.dot(ray.getDirection());
-    auto c = originCenter.dot(originCenter) - (radius * radius);
-    auto discriminant = (b * b) - (4 * a * c);
-
-    if (discriminant < 0)
-    {
-        return -1.0;
-    }
-    else
-    {
-        return (-b - std::sqrt(discriminant) / (2.0 * a));
-    }
-}
 
 namespace RayColorFunctions
 {
@@ -43,10 +25,10 @@ Color3d gradientXYParam(const Ray& ray)
     return (1.0 - t) * Color3d(1.0, 1.0, 1.0) + t * Color3d(0.0, 0.0, 1.0) + t2 * Color3d(1.0, 0.5, 0.0);
 }
 
-Color3d gradientXYParamWithSphere(const Ray& ray)
+Color3d gradientXYParamWithSphere(const Ray& ray, const Shapes::Sphere& sphere)
 {
-    const auto hitColorVal = hitSphere(Point3d(0.0, 0.0, -1.0), 1.0, ray);
-    if(hitColorVal > 0.0)
+    const auto intersects = sphere.intersectsWith(ray);
+    if(intersects)
     {
         return { 1.0, 0.0, 0.0 };
     }
@@ -57,9 +39,10 @@ Color3d gradientXYParamWithSphere(const Ray& ray)
     return (1.0 - t) * Color3d(1.0, 1.0, 1.0) + t * Color3d(0.0, 0.0, 1.0);
 }
 
-Color3d gradientInsideSphere(const Ray& ray)
+Color3d gradientInsideSphere(const Ray& ray, const Shapes::Sphere& sphere)
 {
-    const auto hitColorVal = hitSphere(Point3d(0.0, 0.0, -1.0), 1.0, ray);
+    const auto hitColorVal = sphere.getIntersectingDiscriminant(ray);
+    std::cout << "HitColorVal: " << hitColorVal;
     if(hitColorVal > 0.0)
     {
         Vec3d nFactor = (ray.at(hitColorVal) - Vec3d(0.0, 0.0, -1.0)).unitVector();

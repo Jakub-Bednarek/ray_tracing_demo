@@ -1,8 +1,9 @@
 #ifndef RENDER_ALGORITHMS_HPP
 #define RENDER_ALGORITHMS_HPP
 
-#include "Ray.hpp"
-#include "Vec3.hpp"
+#include "geometry/Ray.hpp"
+#include "geometry/Vec3.hpp"
+#include "geometry/Sphere.hpp"
 #include "Camera.hpp"
 
 #include <cmath>
@@ -17,6 +18,7 @@ namespace RenderAlgorithms
 constexpr auto BLUE_GRADIENT_VAL = static_cast<int>(0.25 * 255.99);
 
 using RayColorFunc = std::function<Color3d(const Utils::Ray&)>;
+using RaySphereColorFunc = std::function<Color3d(const Utils::Ray&, const Shapes::Sphere&)>;
 
 void writeColor(std::stringstream& ss, const Color3d& color)
 {
@@ -49,6 +51,31 @@ std::string generateRayGradient(const std::uint32_t width, const std::uint32_t h
 	return ss.str();
 }
 
+std::string generateSphereGradient(const std::uint32_t width, const std::uint32_t height, RaySphereColorFunc raySphereColorFunc)
+{
+	std::stringstream ss{};
+
+	Camera camera(4.0, 1.0, Point3d(0.0, 0.0, 0.0));
+	Shapes::Sphere sphere { Point3d { 0.0, 0.0, -1.0 }, 1.0 };
+
+	std::cout << "Generating file.\n";
+	for (int i = height - 1; i >= 0; i--)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			const auto u = static_cast<double>(j) / static_cast<double>(width - 1);
+			const auto v = static_cast<double>(i) / static_cast<double>(height - 1);
+			
+			Utils::Ray ray(camera.getOrigin(), camera.getLowerLeftCorner() + (u * camera.getHorizontal()) + (v * camera.getVertical()) - camera.getOrigin());
+			
+			writeColor(ss, raySphereColorFunc(ray, sphere));
+		}
+	}
+	std::cout << "Done.\n";
+
+	return ss.str();
+}
+
 std::string generateRayGradientY(const std::uint32_t width, const std::uint32_t height)
 {
 	return generateRayGradient(width, height, Utils::RayColorFunctions::gradientYParam);
@@ -61,12 +88,12 @@ std::string generateRayGradientXY(const std::uint32_t width, const std::uint32_t
 
 std::string generateRayGradientXYWithSphere(const std::uint32_t width, const std::uint32_t height)
 {
-	return generateRayGradient(width, height, Utils::RayColorFunctions::gradientXYParamWithSphere);
+	return generateSphereGradient(width, height, Utils::RayColorFunctions::gradientXYParamWithSphere);
 }
 
 std::string generateRayGradientInSphere(const std::uint32_t width, const std::uint32_t height)
 {
-	return generateRayGradient(width, height, Utils::RayColorFunctions::gradientInsideSphere);
+	return generateSphereGradient(width, height, Utils::RayColorFunctions::gradientInsideSphere);
 }
 
 std::string generateGradient(const std::uint32_t width, const std::uint32_t height)

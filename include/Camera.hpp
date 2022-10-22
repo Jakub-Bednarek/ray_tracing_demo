@@ -1,8 +1,8 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
-#include "Ray.hpp"
-#include "Vec3.hpp"
+#include "geometry/Ray.hpp"
+#include "geometry/Vec3.hpp"
 
 namespace Config
 {
