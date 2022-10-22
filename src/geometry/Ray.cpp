@@ -41,8 +41,7 @@ Color3d gradientXYParamWithSphere(const Ray& ray, const Shapes::Sphere& sphere)
 
 Color3d gradientInsideSphere(const Ray& ray, const Shapes::Sphere& sphere)
 {
-    const auto hitColorVal = sphere.getIntersectingDiscriminant(ray);
-    std::cout << "HitColorVal: " << hitColorVal;
+    auto hitColorVal = sphere.getGradientVal(ray);
     if(hitColorVal > 0.0)
     {
         Vec3d nFactor = (ray.at(hitColorVal) - Vec3d(0.0, 0.0, -1.0)).unitVector();
@@ -50,6 +49,7 @@ Color3d gradientInsideSphere(const Ray& ray, const Shapes::Sphere& sphere)
         return 0.5 * Color3d(nFactor.x() + 1.0, nFactor.y() + 1.0, nFactor.z() + 1.0);
     }
 
+    hitColorVal = -1.0;
     Vec3d unitDirection = Vec3d { ray.getDirection() }.unitVector();
     auto t = 0.5 * (unitDirection.y() + 1.0);
 

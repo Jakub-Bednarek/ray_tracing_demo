@@ -15,8 +15,8 @@ void runAll()
 								   400);
 	EasyFileWriter::generateToFile("rayGradientXYSphere.ppm", RenderAlgorithms::generateRayGradientXYWithSphere, 400,
 								   400);
-	EasyFileWriter::generateToFile("rayGradientInSphere.ppm", RenderAlgorithms::generateRayGradientInSphere, 400,
-								   400);
+	EasyFileWriter::generateToFile("rayGradientInSphere.ppm", RenderAlgorithms::generateRayGradientInSphere, 1000,
+								   1000);
 }
 
 void runSingle()
