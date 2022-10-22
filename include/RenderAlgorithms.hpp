@@ -29,6 +29,8 @@ std::string generateRayGradient(const std::uint32_t width, const std::uint32_t h
 {
 	std::stringstream ss{};
 	Camera camera(4.0, 1.0, Point3d(0.0, 0.0, 0.0));
+
+	std::cout << "Generating file.\n";
 	for (int i = height - 1; i >= 0; i--)
 	{
 		for (int j = 0; j < width; j++)
@@ -41,9 +43,8 @@ std::string generateRayGradient(const std::uint32_t width, const std::uint32_t h
 
 			writeColor(ss, rayColorFunc(ray));
 		}
-		
-		std::cout << height - i << " / " << height << '\n';
 	}
+	std::cout << "Done.\n";
 
 	return ss.str();
 }
@@ -61,6 +62,11 @@ std::string generateRayGradientXY(const std::uint32_t width, const std::uint32_t
 std::string generateRayGradientXYWithSphere(const std::uint32_t width, const std::uint32_t height)
 {
 	return generateRayGradient(width, height, Utils::RayColorFunctions::gradientXYParamWithSphere);
+}
+
+std::string generateRayGradientInSphere(const std::uint32_t width, const std::uint32_t height)
+{
+	return generateRayGradient(width, height, Utils::RayColorFunctions::gradientInsideSphere);
 }
 
 std::string generateGradient(const std::uint32_t width, const std::uint32_t height)

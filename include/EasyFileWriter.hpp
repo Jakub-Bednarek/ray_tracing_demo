@@ -5,19 +5,19 @@
 #include <fstream>
 #include <functional>
 #include <iostream>
-#include <string_view>
 
 struct EasyFileWriter
 {
 	using ContextGeneratorFunctionPtr =
 		std::function<std::string(const std::uint32_t, const std::uint32_t)>;
 
-	static void generateToFile(std::string_view fileName, ContextGeneratorFunctionPtr functionPtr,
-							   const std::uint32_t width, const std::uint32_t height)
+	static void generateToFile(const std::string& fileName, ContextGeneratorFunctionPtr functionPtr,
+							   const std::uint32_t width, const std::uint32_t height, const std::string& directory = "renders/")
 	{
-		std::cout << "Starting generating file: " << fileName.data() << '\n';
+		const auto targetDir = directory + "/" + fileName;
+		std::cout << "Starting generating file: " << targetDir << '\n';
 
-		auto fileHandle = std::ofstream(fileName.data());
+		auto fileHandle = std::ofstream(targetDir);
 		if (fileHandle.is_open())
 		{
 			fileHandle << "P3\n"
