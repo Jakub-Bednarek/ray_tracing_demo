@@ -56,6 +56,7 @@ Currently there are 2 methods to run algorithms:
     2. (**!Optional!**) Specify custom file name for each algorithm (it doesn't affect destination directory -> they all go to render/). \
         Simply replace **!MY_CUSTOM_FILE_NAME_STRING!** in algorithm of your choice and you're ready to go!
 </br>
+
 ```cpp
 EasyFileWriter::generateToFile(**!MY_CUSTOM_FILE_NAME_STRING!**, RenderAlgorithms::generateRayGradientY, imageWidth,
                                 imageHeight);
