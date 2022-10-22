@@ -9,14 +9,17 @@
 
 void runAll()
 {
-	EasyFileWriter::generateToFile("rayGradientY.ppm", RenderAlgorithms::generateRayGradientY, 400,
-								   400);
-	EasyFileWriter::generateToFile("rayGradientXY.ppm", RenderAlgorithms::generateRayGradientXY, 400,
-								   400);
-	EasyFileWriter::generateToFile("rayGradientXYSphere.ppm", RenderAlgorithms::generateRayGradientXYWithSphere, 400,
-								   400);
-	EasyFileWriter::generateToFile("rayGradientInSphere.ppm", RenderAlgorithms::generateRayGradientInSphere, 1000,
-								   1000);
+	constexpr auto imageWidth = 600;
+	constexpr auto imageHeight = 600;
+
+	EasyFileWriter::generateToFile("rayGradientY.ppm", RenderAlgorithms::generateRayGradientY, imageWidth,
+								   imageHeight);
+	EasyFileWriter::generateToFile("rayGradientXY.ppm", RenderAlgorithms::generateRayGradientXY, imageWidth,
+								   imageHeight);
+	EasyFileWriter::generateToFile("rayGradientXYSphere.ppm", RenderAlgorithms::generateRayGradientXYWithSphere, imageWidth,
+								   imageHeight);
+	EasyFileWriter::generateToFile("rayGradientInSphere.ppm", RenderAlgorithms::generateRayGradientInSphere, imageWidth,
+								   imageHeight);
 }
 
 void runSingle()

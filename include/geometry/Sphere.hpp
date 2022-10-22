@@ -16,24 +16,15 @@ public:
 
     double getIntersectingDiscriminant(const Utils::Ray& ray) const
     {
-        Vec3d originCenter = ray.getOrigin() - center;
+        const auto sphereEquasion = getSphereRayEquasion(ray);
 
-        auto a = ray.getDirection().dot(ray.getDirection());
-        auto b = 2.0 * originCenter.dot(ray.getDirection());
-        auto c = originCenter.dot(originCenter) - (radius * radius);
-        auto discriminant = (b * b) - (4 * a * c);
-
-        return discriminant;
+        return getDiscriminant(sphereEquasion);
     }
 
     double getGradientVal(const Utils::Ray& ray) const
     {
-        Vec3d originCenter = ray.getOrigin() - center;
-
-        auto a = ray.getDirection().dot(ray.getDirection());
-        auto b = 2.0 * originCenter.dot(ray.getDirection());
-        auto c = originCenter.dot(originCenter) - (radius * radius);
-        auto discriminant = (b * b) - (4 * a * c);
+        const auto sphereEquasion = getSphereRayEquasion(ray);
+        const auto discriminant = getDiscriminant(sphereEquasion);
 
         if(discriminant < 0.0)
         {
@@ -41,13 +32,28 @@ public:
         }
         else
         {
-            return (-b - std::sqrt(discriminant) / (2.0 * a));
+            return (-sphereEquasion.y() - std::sqrt(discriminant) / sphereEquasion.x());
         }
     }
 
     bool intersectsWith(const Utils::Ray& ray) const
     {
         return getIntersectingDiscriminant(ray) > 0;
+    }
+private:
+    Vec3d getSphereRayEquasion(const Utils::Ray& ray) const
+    {
+        Vec3d originCenter = ray.getOrigin() - center;
+        const auto a = ray.getDirection().length_squared();
+        const auto halfB = originCenter.dot(ray.getDirection());
+        const auto c = originCenter.length_squared() - (radius * radius);
+
+        return { a, halfB, c };
+    }
+
+    double getDiscriminant(const Vec3d& sphereEquasion) const
+    {
+        return sphereEquasion.b() * sphereEquasion.b() - (sphereEquasion.a() * sphereEquasion.c());
     }
 private:
     Point3d center;

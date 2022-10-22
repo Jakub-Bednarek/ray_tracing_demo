@@ -56,7 +56,7 @@ std::string generateSphereGradient(const std::uint32_t width, const std::uint32_
 	std::stringstream ss{};
 
 	Camera camera(4.0, 1.0, Point3d(0.0, 0.0, 0.0));
-	Shapes::Sphere sphere { Point3d { 0.0, 0.0, -1.0 }, 1.0 };
+	Shapes::Sphere sphere { Point3d { 0.0, 0.0, -1.0 }, 0.8 };
 
 	std::cout << "Generating file.\n";
 	for (int i = height - 1; i >= 0; i--)

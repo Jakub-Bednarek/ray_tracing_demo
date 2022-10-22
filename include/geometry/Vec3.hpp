@@ -53,6 +53,10 @@ public:
 	inline const_reference y() const { return v.at(1); }
 	inline const_reference z() const { return v.at(2); }
 
+	inline const_reference a() const { return v.at(0); }
+	inline const_reference b() const { return v.at(1); }
+	inline const_reference c() const { return v.at(2); }
+
 	Vec3 unitVector() const noexcept { return *this / length(); }
 
 	double length() const noexcept { return std::sqrt(length_squared()); }
@@ -64,12 +68,12 @@ public:
 
 	double dot(const Vec3& rhs) const noexcept
 	{
-		return {v.at(0) * rhs.v.at(0) + v.at(1) * rhs.v.at(1) + v.at(2) + rhs.v.at(2)};
+		return {v.at(0) * rhs.v.at(0) + v.at(1) * rhs.v.at(1) + v.at(2) * rhs.v.at(2)};
 	}
 
 	static double dot(const Vec3& lhs, const Vec3& rhs)
 	{
-		return {lhs.at(0) * rhs.v.at(0) + lhs.at(1) * rhs.v.at(1) + lhs.at(2) + rhs.v.at(2)};
+		return {lhs.at(0) * rhs.v.at(0) + lhs.at(1) * rhs.v.at(1) + lhs.at(2) * rhs.v.at(2)};
 	}
 
 	Vec3 cross(const Vec3& rhs) const noexcept
