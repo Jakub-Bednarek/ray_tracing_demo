@@ -68,14 +68,15 @@ EasyFileWriter::generateToFile(**!MY_CUSTOM_FILE_NAME_STRING!**, RenderAlgorithm
 </br>
 
 # Building and running project
-Project uses cmake and make to build and run project. Currently available targets:
-    - make clean -> clean ./build/ directory
-    - make config -> runs cmake config
-    - make build -> builds target
-    - make run -> runs previously built target
-    - make -> configures, builds and runs the target
-    - make cpp_tests -> builds and runs cpp uint tests (! currently bugged !)
-    - make cpp_config -> runs cmake for cpp unit tests target
+Project uses cmake and make to build and run project. </br></br>
+Currently available targets: </br>
+ - make clean -> clean ./build/ directory
+ - make config -> runs cmake config
+ - make build -> builds target
+ - make run -> runs previously built target
+ - make -> configures, builds and runs the target
+ - make cpp_tests -> builds and runs cpp uint tests (! currently bugged !)
+ - make cpp_config -> runs cmake for cpp unit tests target
 
 Simpliest way to render your beautiful scene:
 ```
