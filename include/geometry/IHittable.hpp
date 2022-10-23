@@ -11,6 +11,13 @@ struct HitRecord
     Point3d position;
     Vec3d normal;
     double t;
+    bool frontFace;
+
+    inline void setFaceNormal(const Utils::Ray& ray, const Vec3d& outwardNormal)
+    {
+        frontFace = ray.getDirection().dot(outwardNormal) < 0;
+        normal = frontFace ? outwardNormal : -outwardNormal;
+    }
 };
 
 class IHittable

@@ -22,7 +22,7 @@ public:
 
 	Vec3(const Vec3&) = default;
 	Vec3(Vec3&&) = default;
-	Vec3& operator=(Vec3&) = default;
+	Vec3& operator=(const Vec3&) = default;
 	Vec3& operator=(Vec3&&) = default;
 
 	reference at(const int index)
@@ -89,8 +89,6 @@ public:
 				lhs.at(2) * rhs.at(0) - lhs.at(0) * rhs.at(2),
 				lhs.at(0) * rhs.at(1) - lhs.at(1) * rhs.at(0)};
 	}
-
-	Vec3 operator-() { return {-v.at(0), -v.at(1), -v.at(2)}; }
 
 	Vec3& operator*=(const Vec3& rhs) noexcept
 	{
@@ -216,6 +214,12 @@ template <typename T>
 Vec3<T> operator/(const Vec3<T>& lhs, const Vec3<T>& rhs)
 {
 	return {lhs.x() / rhs.x(), lhs.y() / rhs.y(), lhs.z() / rhs.z()};
+}
+
+template <typename T>
+Vec3<T> operator-(const Vec3<T>& vec)
+{
+	return { -vec.x(), -vec.y(), -vec.z() };
 }
 
 }  // namespace Utils

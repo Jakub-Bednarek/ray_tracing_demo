@@ -38,7 +38,7 @@ public:
 
         hitRecord.t = root;
         hitRecord.position = ray.at(root);
-        hitRecord.normal = (hitRecord.position - center) / radius;
+        hitRecord.setFaceNormal(ray, (hitRecord.position - center) / radius);
 
         return true;
     }
