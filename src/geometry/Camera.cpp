@@ -3,7 +3,7 @@
 #include "GlobalConfig.hpp"
 
 Camera::Camera()
-	: viewportHeight(4.0),
+	: viewportHeight(2.0),
 	  viewportWidth(Config::aspectRatio * viewportHeight),
 	  focalLength(1.0),
 	  origin(0.0, 0.0, 0.0),

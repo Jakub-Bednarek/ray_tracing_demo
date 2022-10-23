@@ -43,19 +43,21 @@ endmacro()
 set(INCLUDE ${CMAKE_SOURCE_DIR}/include)
 set(HEADERS 
     ${INCLUDE}/EasyFileWriter.hpp
-    ${INCLUDE}/RenderAlgorithms.hpp
     ${INCLUDE}/geometry/Ray.hpp
     ${INCLUDE}/geometry/Sphere.hpp
-    ${INCLUDE}/geometry/Vec3.hpp)
+    ${INCLUDE}/geometry/Vec3.hpp
+    ${INCLUDE}/geometry/IHittable.hpp
+    ${INCLUDE}/Renderer.hpp)
 
 set(SRC ${CMAKE_SOURCE_DIR}/src)
 set(SOURCES
     ${CMAKE_SOURCE_DIR}/main.cpp
     ${SRC}/geometry/Camera.cpp
-    ${SRC}/geometry/Ray.cpp)
+    ${SRC}/geometry/Ray.cpp
+    ${SRC}/Renderer.cpp)
 
 add_demo_executable(${PROJECT_NAME} "${HEADERS}" "${SOURCES}")
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE})
+target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE} ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/include)

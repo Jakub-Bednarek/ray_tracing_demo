@@ -1,6 +1,7 @@
 #ifndef SPHERE_HPP
 #define SPHERE_HPP
 
+#include "IHittable.hpp"
 #include "Ray.hpp"
 #include "Vec3.hpp"
 
@@ -8,37 +9,38 @@
 
 namespace Shapes 
 {
-class Sphere
+class Sphere : public IHittable
 {
 public:
-    Sphere() : center(0.0, 0.0, 0.0), radius(1.0) {}
+    Sphere() : center(0.0, 0.0, -1.0), radius(0.5) {}
     Sphere(const Point3d& center, const double radius): center(center), radius(radius) {}
 
-    double getIntersectingDiscriminant(const Utils::Ray& ray) const
-    {
-        const auto sphereEquasion = getSphereRayEquasion(ray);
-
-        return getDiscriminant(sphereEquasion);
-    }
-
-    double getGradientVal(const Utils::Ray& ray) const
+    bool hit(const Utils::Ray& ray, const double tMin, const double tMax, HitRecord& hitRecord) const override
     {
         const auto sphereEquasion = getSphereRayEquasion(ray);
         const auto discriminant = getDiscriminant(sphereEquasion);
 
-        if(discriminant < 0.0)
+        if (discriminant < 0) 
         {
-            return -1.0;
+            return false;
         }
-        else
-        {
-            return (-sphereEquasion.y() - std::sqrt(discriminant) / sphereEquasion.x());
-        }
-    }
 
-    bool intersectsWith(const Utils::Ray& ray) const
-    {
-        return getIntersectingDiscriminant(ray) > 0;
+        const auto sqrtDisc = std::sqrt(discriminant);
+        auto root = (sphereEquasion.b() - sqrtDisc) / sphereEquasion.a();
+        if(root < tMin || root > tMax)
+        {
+            root = (sphereEquasion.b() + sqrtDisc) / sphereEquasion.a();
+            if(root < tMin || root > tMax)
+            {
+                return false;
+            }
+        }
+
+        hitRecord.t = root;
+        hitRecord.position = ray.at(root);
+        hitRecord.normal = (hitRecord.position - center) / radius;
+
+        return true;
     }
 private:
     Vec3d getSphereRayEquasion(const Utils::Ray& ray) const

@@ -26,14 +26,6 @@ private:
 	Vec3d direction;
 };
 
-namespace RayColorFunctions
-{
-Color3d gradientYParam(const Ray& ray);
-Color3d gradientXYParam(const Ray& ray);
-Color3d gradientXYParamWithSphere(const Ray& ray, const Shapes::Sphere& sphere);
-Color3d gradientInsideSphere(const Ray& ray, const Shapes::Sphere& sphere);
-}
-
 std::ostream& operator<<(std::ostream& out, const Ray& ray);
 
 }  // namespace Utils
